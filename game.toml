@@ -1,0 +1,52 @@
+# Autofilled by tools/new_project_layout/probe_disc.py from your legal dump.
+# Review before shipping. Runtime quirks / overlay seeds still need hand work.
+
+[game]
+name = "Xena: Warrior Princess"
+id = "SLUS-00977"
+region = "USA"
+players = 1
+exe = "disc/SLUS_009.77"
+load_address = "0x80010000"
+entry_pc = "0x80091D9C"
+text_size = "0x000E1000"
+stack_base = "0x801FFFF0"
+
+# Digests are for data Track 01 (first BINARY FILE / TRACK 01).
+[prepare_disc]
+out_dir = "disc"
+bin_name = "disc1.bin"
+cue_name = "disc1.cue"
+boot_exe = "SLUS_009.77"
+known_sizes = [322790832]
+known_md5 = [
+  "cd3bd419b83deb658cff86ec356e965a",
+]
+known_sha1 = [
+  "2f7ee5625aaa02c536938fb66fcf06d4d8f6b422",
+]
+
+[recompiler]
+seeds = "seeds/ghidra_funcs.txt"
+out_dir = "generated"
+strict = true
+
+[runtime]
+window_title = "Xena: Warrior Princess Recompiled"
+memcard_dir = "saves"
+bios_hle = false
+openbios = false
+
+[video]
+renderer = "opengl"
+aspect_ratio = "4:3"
+
+[controller]
+default_mode = "digital"
+
+# Online mount gate: digests + track count + optional TOC fingerprint
+# (see docs/NETPLAY.md).
+[netplay]
+require_cue = true
+required_tracks = 1
+required_disc_fp = "ab7034bbfa5e804f9a798770fc78511cff0202711c5dca81cfabfdc3413c3fd7"

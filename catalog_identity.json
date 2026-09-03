@@ -1,0 +1,46 @@
+{
+  "format_version": 1,
+  "game": {
+    "name": "Xena: Warrior Princess",
+    "id": "SLUS-00977",
+    "boot_exe": "SLUS_009.77"
+  },
+  "marketing": {
+    "description": "Xena: Warrior Princess recompiled for modern systems using psxrecomp.",
+    "publisher": "Electronic Arts",
+    "year": "1999",
+    "region": "USA",
+    "players": 1
+  },
+  "rom_identity": {
+    "cue_name": "disc1.cue",
+    "bin_name": "disc1.bin",
+    "track_counts": [
+      1
+    ],
+    "require_cue": true,
+    "data_track": {
+      "size": 322790832,
+      "md5": "cd3bd419b83deb658cff86ec356e965a",
+      "sha1": "2f7ee5625aaa02c536938fb66fcf06d4d8f6b422"
+    },
+    "disc_fp": "ab7034bbfa5e804f9a798770fc78511cff0202711c5dca81cfabfdc3413c3fd7"
+  },
+  "exe": {
+    "load_address": "0x80010000",
+    "entry_pc": "0x80091D9C",
+    "text_size": "0x000E1000",
+    "stack_base": "0x801FFFF0"
+  },
+  "seeds": {
+    "count": 1166,
+    "source": "boot_exe_jal"
+  },
+  "warnings": [],
+  "notes": [
+    "entry_pc/load_address/text_size/stack_base taken from PS-X EXE header.",
+    "seeds are first-pass boot-EXE JAL targets (+ entry); expect to grow as overlays / runtime paths are discovered.",
+    "required_disc_fp is psxrecomp-toc-v1 (matches runtime DiscIdentity).",
+    "The owned USA revision is a complete one-track disc."
+  ]
+}
