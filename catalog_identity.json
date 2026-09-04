@@ -13,16 +13,18 @@
     "players": 1
   },
   "rom_identity": {
-    "cue_name": "disc1.cue",
-    "bin_name": "disc1.bin",
+    "cue_name": "Xena - Warrior Princess (USA).cue",
+    "bin_name": "Xena - Warrior Princess (USA).bin",
     "track_counts": [
       1
     ],
     "require_cue": true,
     "data_track": {
       "size": 322790832,
+      "crc32": "3ff3122d",
       "md5": "cd3bd419b83deb658cff86ec356e965a",
-      "sha1": "2f7ee5625aaa02c536938fb66fcf06d4d8f6b422"
+      "sha1": "2f7ee5625aaa02c536938fb66fcf06d4d8f6b422",
+      "sha256": "d5affb92a8301a501097445194a074cfb8b14b3945c2e2f6debd75519d26af0d"
     },
     "disc_fp": "ab7034bbfa5e804f9a798770fc78511cff0202711c5dca81cfabfdc3413c3fd7"
   },

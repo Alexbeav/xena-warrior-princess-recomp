@@ -7,7 +7,7 @@
 - Source executable path: `disc/SLUS_009.77`.
 - Load address: `0x80010000`.
 - Entry point: `0x80091D9C`.
-- Source disc binding: ``.
+- Source disc binding: `SLUS-00977`, complete one-track USA CUE/BIN set.
 
 The source `game.toml` confirms these values. This preparation did not read or
 copy retail content.
@@ -22,8 +22,8 @@ The current portfolio package records an automated build, audit, launcher
 marker check, and startup smoke result. That receipt is build and startup
 evidence only. It does not prove full-game correctness.
 
-The current public topology is the aggregate Wave 1 `v0.2.3` kit. This title
-does not have a public standalone repository.
+The current public topology is this standalone repository and its `v0.1.2`
+four-platform release.
 
 ## Refresh result
 
@@ -40,14 +40,11 @@ state.
 Widescreen, high-frame-rate simulation, and new input work are outside this
 refresh. Review them only after the exact base passes the title gates.
 
-## Smallest decisive next steps
+## Smallest decisive next step
 
-1. Select one exact accepted PSXRecomp source.
-2. Test the setup-marker fail-closed contract on that source.
-3. Build this title in this isolated preparation branch.
-4. Record exact Windows, Linux, and macOS package identities.
-5. Ask Alex to test the exact packages.
-6. Assign a release version only after the version gate passes.
+Submit `catalog/xena-warrior-princess-psx.json` through the signed-in RetComM
+catalog form. Hash the owned CUE and first BIN in the browser. Leave Netplay
+clear because this is a one-player title.
 
 ## Evidence
 
@@ -78,10 +75,12 @@ The package gate rejects a setup host or emitter that needs a glibc version
 newer than 2.31. This keeps the release compatible with the qualified Rocky
 Linux 9 host. Windows and both macOS builds keep their existing runners.
 
-## 2026-09-04 v0.1.2 POSIX setup-copy candidate
+## 2026-09-04 v0.1.2 release
 
 This candidate pins PSXRecomp 40ce47896026be52bcaae7de03b69766e0bd03e4 and recomp-ui be8ac1d03ee19d55394b5a5f2d9d1506edd56659.
 Linux and macOS packages use native CMake, Ninja, Python, C, and C++ tools.
 Windows keeps the portable toolchain route. This change does not change game
-code or the graduation state. Build-only CI and every exact-package release
-gate must pass before publication.
+code or the graduation state. The four public assets passed the release gates.
+RetComM `v0.6.33` installed the exact Windows asset, built the owned inputs,
+and reached accepted gameplay. The relaunch closed through
+`sdl_window_close` at frame 1,700 with no fatal state.

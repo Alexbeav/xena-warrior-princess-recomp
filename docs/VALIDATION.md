@@ -3,10 +3,10 @@
 ## Scope
 
 - Game: Xena: Warrior Princess, USA, `SLUS-00977`
-- Version: `0.1.0`
+- Version: `0.1.2`
 - Catalog ID: `xena-warrior-princess-psx`
 - Release repository: `Alexbeav/xena-warrior-princess-recomp`
-- Publication state: not published
+- Publication state: public release `v0.1.2`
 
 ## Frozen inputs
 
@@ -31,5 +31,18 @@ pass visible gameplay from the exact package.
 - Fatal state: none
 - Automatic or failed freeze dumps: none
 
-The hidden test proves bounded startup progress. It does not prove gameplay,
-input, audio, saves, or package installation.
+The hidden test proves bounded startup progress. It does not prove full-game
+correctness.
+
+## RetComM package gate
+
+RetComM `v0.6.33` installed the exact public Windows asset. Its SHA-256 is
+`309479D31EED99A0146E9131F0C1A07328E356E48CA025A9DEE63E07053F035E`.
+The package generated and built with an owned one-track USA disc and an owned
+SCPH-1001 BIOS. Alex accepted gameplay from that installed package on
+2026-09-04. A later RetComM launch skipped first-run setup, reached the game,
+and closed through `sdl_window_close` at frame 1,700 with no fatal state.
+
+The catalog manifest is `catalog/xena-warrior-princess-psx.json`. The hosted
+form can misread the media-only `[netplay]` block as multiplayer support, so
+leave the Netplay box clear.
