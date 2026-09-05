@@ -164,15 +164,12 @@ jobs:
     - name: Prefetch SDL3 source
       shell: bash
       run: "set -euo pipefail\n# Use repo-relative paths for tar: Windows GITHUB_WORKSPACE is D:\\\u2026\n# and GNU tar treats\
-        \ drive-letter abs paths as remote hosts\n# (\"Cannot connect to D\"). Prefer prefetch_sdl3.sh when present.\nOUT=\"\
-        .cache/sdl3-src\"\nsdl3_env() {\n  local abs=\"${OUT}\"\n  if command -v cygpath >/dev/null 2>&1; then\n    abs=\"\
-        $(cygpath -m \"${OUT}\")\"\n  elif [[ -d \"${OUT}\" ]]; then\n    abs=\"$(cd \"${OUT}\" && pwd)\"\n  fi\n  echo \"\
-        PSX_SDL3_SOURCE_DIR=${abs}\" >>\"$GITHUB_ENV\"\n  echo \"SDL3 source ready: ${abs}\"\n}\nif [[ -f \"${OUT}/CMakeLists.txt\"\
-        \ ]]; then\n  sdl3_env\n  echo \"SDL3 source cache hit\"\n  exit 0\nfi\nif [[ -f psxrecomp/tools/ci/prefetch_sdl3.sh\
-        \ ]] && \\\n    curl --retry-all-errors --version >/dev/null 2>&1; then\n  chmod +x psxrecomp/tools/ci/prefetch_sdl3.sh\n\
-        \  bash psxrecomp/tools/ci/prefetch_sdl3.sh --out-dir \"${OUT}\"\n  exit 0\nfi\n# The helper can be missing or can\
-        \ require a newer curl. Use the\n# exact inline fallback on older release environments.\necho \"using compatible inline\
-        \ SDL3 prefetch\"\nmkdir -p .cache\nVER=3.4.10\nSHA=12b34280415ec8418c864408b93d008a20a6530687ee613d60bfbd20411f2785\n\
+        \ drive-letter abs paths as remote hosts\n# (\"Cannot connect to D\"). Use the pinned inline recipe on every platform.\n\
+        OUT=\".cache/sdl3-src\"\nsdl3_env() {\n  local abs=\"${OUT}\"\n  if command -v cygpath >/dev/null 2>&1; then\n   \
+        \ abs=\"$(cygpath -m \"${OUT}\")\"\n  elif [[ -d \"${OUT}\" ]]; then\n    abs=\"$(cd \"${OUT}\" && pwd)\"\n  fi\n\
+        \  echo \"PSX_SDL3_SOURCE_DIR=${abs}\" >>\"$GITHUB_ENV\"\n  echo \"SDL3 source ready: ${abs}\"\n}\nif [[ -f \"${OUT}/CMakeLists.txt\"\
+        \ ]]; then\n  sdl3_env\n  echo \"SDL3 source cache hit\"\n  exit 0\nfi\n# Keep extraction compatible with macOS Bash\
+        \ 3.2 and BSD tar.\necho \"using compatible inline SDL3 prefetch\"\nmkdir -p .cache\nVER=3.4.10\nSHA=12b34280415ec8418c864408b93d008a20a6530687ee613d60bfbd20411f2785\n\
         URL=\"https://github.com/libsdl-org/SDL/releases/download/release-${VER}/SDL3-${VER}.tar.gz\"\nTAR=\".cache/SDL3-${VER}.tar.gz\"\
         \ncurl -fsSL --http1.1 --retry 5 --retry-connrefused --retry-delay 2 -o \"${TAR}\" \"${URL}\"\necho \"${SHA}  ${TAR}\"\
         \ | sha256sum -c -\nrm -rf \"${OUT}.extracting\"\nmkdir -p \"${OUT}.extracting\"\n# --force-local: belt-and-suspenders\
