@@ -1,5 +1,13 @@
 # Xena: Warrior Princess feasibility binding
 
+## Current build-only pipeline candidate
+
+The candidate replaces the invalid release workflow with a read-only four-platform build.
+It adds exact archive and native generator gates and fixes the macOS build settings.
+It retains the existing title configuration, framework, UI, and version.
+Native Mac CI results remain pending.
+See [RELEASE_PIPELINE.md](RELEASE_PIPELINE.md).
+
 ## Identity
 
 - Title and region: Xena: Warrior Princess, USA.
