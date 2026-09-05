@@ -84,6 +84,10 @@ jobs:
           '1a55db9d5c356580d77331f63359b351e600e05fff2ca63d6835b4d7809c66b1' /tmp/vulkan-headers.deb \
           | sha256sum -c -
         dpkg -i /tmp/shaderc.deb /tmp/vulkan-headers.deb
+    - name: Preserve committed checkout bytes
+      shell: bash
+      run: |
+        git config --global core.autocrlf false
     - name: Checkout
       uses: actions/checkout@v4
       with:

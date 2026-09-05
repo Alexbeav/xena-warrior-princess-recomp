@@ -36,6 +36,19 @@ def command(args, cwd=None):
     return subprocess.check_output(args, cwd=cwd, text=True, encoding='utf-8', errors='replace').strip()
 
 
+def committed_recipe_hashes(root):
+    """Bind exact committed bytes; platform checkout conversion is not a new recipe."""
+    root = Path(root)
+    result = {}
+    for name in ('game.toml', 'catalog_identity.json', 'codegen_setup.c', 'CMakeLists.txt'):
+        committed = subprocess.check_output(['git', '-C', str(root), 'show', 'HEAD:' + name])
+        if (root / name).read_bytes() != committed:
+            raise ValueError('recipe checkout differs from committed bytes: ' + name +
+                             '; use core.autocrlf=false before checkout and retain committed content')
+        result[name] = hashlib.sha256(committed).hexdigest()
+    return result
+
+
 def source_contract(root, version):
     """Bind the committed recipe and reject a mismatched deferred launch name."""
     root = Path(root)
@@ -87,8 +100,7 @@ def source_contract(root, version):
     if policy_path.exists():
         policy = json.loads(policy_path.read_text(encoding='utf-8'))
         pins['openbios_required'] = policy.get('openbios_required', False)
-    pins['recipe_sha256'] = {name: digest(root / name) for name in
-                            ('game.toml', 'catalog_identity.json', 'codegen_setup.c', 'CMakeLists.txt')}
+    pins['recipe_sha256'] = committed_recipe_hashes(root)
     return pins
 
 

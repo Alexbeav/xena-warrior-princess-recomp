@@ -1,5 +1,18 @@
 # Development log
 
+## 2026-09-05 native canary: Windows byte identity
+
+The Windows native job passes, but the independent local collection audit rejects all four recipe hashes.
+Each archive file differs from its committed counterpart only by LF-to-CRLF conversion.
+Converting CRLF back to LF reproduces every frozen plan hash exactly.
+The workflow now disables automatic line-ending conversion before checkout.
+The source gate also compares recipe files against committed blob bytes, so a converted checkout cannot silently define another recipe.
+The Git-backed regression rejects both line-ending conversion and changed content.
+
+Corpus consulted: PSX-WIN-004 and the previous Step 2 patch-replay line-ending control.
+The [Git attributes documentation](https://git-scm.com/docs/gitattributes) describes checkout conversion.
+No package hash comparison is relaxed, and the failed Windows archive remains the negative control.
+
 ## 2026-09-05 native canary: Linux source audit
 
 The same run builds and packages the Linux setup host successfully.
