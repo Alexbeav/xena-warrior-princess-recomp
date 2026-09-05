@@ -11,6 +11,8 @@ Those checks do not claim complete setup or gameplay.
 
 The macOS target applies to every executable needed for setup.
 The setup host links pinned static SDL source instead of a Homebrew SDL library.
+The native job signs the three setup executables before packaging and verifies their signatures.
+These ad-hoc signatures do not establish Apple notarization or downloaded-file startup behavior.
 The emitter cache includes the runner, architecture, minimum OS, framework, and workflow recipe.
 
 The current branch is a build-only canary at version 0.1.2.

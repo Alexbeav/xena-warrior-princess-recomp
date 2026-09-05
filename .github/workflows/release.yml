@@ -280,6 +280,27 @@ jobs:
         \ submodule)\"\n  exit 1\nfi\nBUILT=\"$(tr -d '[:space:]' <\"${STAMP}\")\"\nBUILT=\"${BUILT#v}\"\nif [[ \"${BUILT}\"\
         \ != \"${RELEASE_VERSION}\" ]]; then\n  echo \"::error::lobby pin stamp ${BUILT} != RELEASE_VERSION ${RELEASE_VERSION}\
         \ (${STAMP})\"\n  exit 1\nfi\necho \"lobby pin ok: ${BUILT} (${STAMP})\"\n"
+    - name: Sign macOS setup executables
+      if: runner.os == 'macOS'
+      shell: bash
+      run: |
+        set -euo pipefail
+        python3 - <<'PY'
+        import os
+        from pathlib import Path
+        import subprocess
+        import sys
+        sys.path.insert(0, '.release/')
+        from release_package_gate import source_contract
+        name = source_contract('.', os.environ['RELEASE_VERSION'])['exe_name']
+        hosts = [p for p in Path('build-ci').rglob(name) if p.is_file()]
+        if len(hosts) != 1:
+            raise SystemExit('Expected one compiled setup host for signing')
+        binaries = hosts + [Path('build-recompiler') / name for name in ('psxrecomp-game', 'psxrecomp-bios')]
+        for binary in binaries:
+            subprocess.run(['codesign', '--force', '--sign', '-', '--timestamp=none', str(binary)], check=True)
+            subprocess.run(['codesign', '--verify', '--strict', str(binary)], check=True)
+        PY
     - name: Package setup zip
       run: |
         set -euo pipefail
