@@ -1,5 +1,20 @@
 # Development log
 
+## 2026-09-05 native canary: Linux source audit
+
+The same run builds and packages the Linux setup host successfully.
+The final gate then fails because Git rejects the container checkout's ownership.
+The checkout action adds `safe.directory` under its temporary HOME.
+The later shell gate does not inherit that configuration.
+The workflow now adds the five explicit owned checkout paths in the container's shell environment.
+No wildcard trust or local machine configuration change is required.
+
+Corpus consulted: shared release findings and failure/ regression ledgers contain no matching ownership record.
+The [Actions runner issue](https://github.com/actions/runner/issues/2033) documents the container/HOME mismatch.
+The [Git configuration reference](https://git-scm.com/docs/git-config) defines the per-directory trust setting.
+Compilation, package-copy, and payload failure are rejected diagnoses for this observed Git error.
+The next native run must pass the complete archive and generator gate.
+
 ## 2026-09-05 native canary: SDL extraction
 
 Run 33967561747 passes the frozen-source gate but both native Mac jobs fail during SDL extraction.

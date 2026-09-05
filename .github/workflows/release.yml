@@ -91,6 +91,15 @@ jobs:
         fetch-depth: '1'
         ref: ${{ github.sha }}
         persist-credentials: false
+    - name: Trust checked-out CI sources
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        set -euo pipefail
+        for source in . psxrecomp recomp-ui psxrecomp/lib/recomp-net psxrecomp/lib/retcomm-rbengine; do
+          root="$(cd "${GITHUB_WORKSPACE}/${source}" && pwd -P)"
+          git config --global --add safe.directory "${root}"
+        done
     - name: Record framework revisions
       shell: bash
       run: bash psxrecomp/tools/ci/record_pins.sh
